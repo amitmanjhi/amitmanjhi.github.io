@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Conclusions</TITLE>
+<META NAME="description" CONTENT="Conclusions">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="finalReport.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html119"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html117"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html111"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html120"
+  HREF="node11.html">Bibliography</A>
+<B> Up:</B> <A NAME="tex2html118"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html112"
+  HREF="node9.html">Experimental Results</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00060000000000000000">
+Conclusions</A>
+</H1>
+It is a challenging problem to continuously devise new methods to hide the memory latency in view of the 
+ever-increasing performance memory gap. In this study, we focused on whether it is possible to alleviate this 
+problem either by having a good history-based cache management strategy or by intelligently controlling the 
+cache parameters of a L2 cache. We found that no single scheme is good for all workloads, which points to some 
+sort of an adaptive scheme or a profiling-based more cache-conscious data placement for programs with 
+large running times. The <EM>hotornot</EM> scheme seems promising but it needs to be tested 
+on more workloads. Also, in some cases, the difference in 
+cache misses among policies 
+ was too small to warrant shifting to a more complicated strategy.  Increasing the cache size 
+mostly helps but it again depends on the active data set of the executing program. Similarly, 
+increasing associativity mostly helps, but that needs to be balanced against increased hit time. 
+In particular, we found that <EM>increasing associativity</EM> could potentially <EM>increase</EM> cache 
+misses. As an aside, we also quantify the trade-off 
+between cache misses and dirty writes in this study and try to incorporate the problem 
+of dirty  writes in the cache management algorithm.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html119"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html117"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html111"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html120"
+  HREF="node11.html">Bibliography</A>
+<B> Up:</B> <A NAME="tex2html118"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html112"
+  HREF="node9.html">Experimental Results</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Experimental setup</TITLE>
+<META NAME="description" CONTENT="Experimental setup">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="finalReport.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html39"
+  HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html37"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html31"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html40"
+  HREF="node3.html">Pitfalls and Workarounds</A>
+<B> Up:</B> <A NAME="tex2html38"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html32"
+  HREF="node1.html">Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00020000000000000000">
+Experimental setup</A>
+</H1>
+In this section, we describe our experimental setup and
+details of our methodology.
+
+<P>
+For attaining our goal of studying the cache performance of various
+algorithms on typical loads, it was important that our loads have 
+reproducible performance and reflect well the
+behavior of typical programs. At the same time, we wanted them to 
+be large programs, so that they stress the cache system and
+allow clever replacement policies to make their effects
+felt. For this purpose, we used a suite of programs selected
+from the SPEC 95 integer benchmarks, the Mediabench[<A
+ HREF="node11.html#media">7</A>]
+benchmarks of multimedia applications, and some programs
+implementing various algorithms in C++ and Java[<A
+ HREF="node11.html#wisc">8</A>]. The
+benchmark programs are described in a subsequent section.
+
+<P>
+We decided to use the ATOM instrumentation tool available on
+the Alpha machines[<A
+ HREF="node11.html#atom">6</A>]. This allowed us to instrument any
+executable code with our instrumentation routines. In
+particular, we catch the memory accesses (loads and stores),
+and call our routines which simulate a data cache.
+
+<P>
+The different cache algorithms were implemented to be as
+independent of each other as possible. They maintain no
+global state. Any state maintained is done by static
+variables within the functions. This allowed us to compile
+and use the functions in a modularised way. We used shell
+scripting extensively to automate our testing and result 
+generation processes.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html41"
+  HREF="node3.html">Pitfalls and Workarounds</A>
+<LI><A NAME="tex2html42"
+  HREF="node4.html">Debugging innovations</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html39"
+  HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html37"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html31"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html40"
+  HREF="node3.html">Pitfalls and Workarounds</A>
+<B> Up:</B> <A NAME="tex2html38"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html32"
+  HREF="node1.html">Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

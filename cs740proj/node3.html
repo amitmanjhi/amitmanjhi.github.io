@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Pitfalls and Workarounds</TITLE>
+<META NAME="description" CONTENT="Pitfalls and Workarounds">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html51"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html49"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html43"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html52"
+  HREF="node4.html">Debugging innovations</A>
+<B> Up:</B> <A NAME="tex2html50"
+  HREF="node2.html">Experimental setup</A>
+<B> Previous:</B> <A NAME="tex2html44"
+  HREF="node2.html">Experimental setup</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00021000000000000000">
+Pitfalls and Workarounds</A>
+</H2>
+We realized that we need to use real-life data to test our
+cache behavior, not just standard benchmarks. For this purpose, 
+we obtained
+data access traces for some C++ and Java programs
+representing classic programming problems. These are smaller
+than the well-recognized SPEC benchmarks, but still show
+some interesting behavior. We also looked at the Mediabench
+programs to see what special characteristics a multimedia
+application possesses.
+
+<P>
+A big problem for us was that the ATOM-instrumented code
+runs very slowly. This is logical since the original programs
+themselves are quite time-consuming. Through 
+our instrumentation routines, we have further increased the 
+ time required for every memory access. After some thought,
+we realized that we did not really need to execute the
+entire program every time we modified our cache policy. 
+What was important for us was the trace of
+the data access. Given this, a driver could apply the cache
+replacement strategies in essentially a platform-independent
+way, 
+to execute our implementation. 
+Collecting the  program traces was a non-trivial exercise, 
+mostly because large programs required huge amounts of storage. 
+For example, one of 
+the SPEC benchmarks (the JPEG program) generated about 8 billion 
+addresses. 
+Thus in some cases, it was better to run
+the program, albeit slowly, than to use a stored trace. 
+Thus there was a trade-off
+between time and disk-space. The trace method was used for the smaller
+programs and for debugging purposes. 
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html51"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html49"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html43"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html52"
+  HREF="node4.html">Debugging innovations</A>
+<B> Up:</B> <A NAME="tex2html50"
+  HREF="node2.html">Experimental setup</A>
+<B> Previous:</B> <A NAME="tex2html44"
+  HREF="node2.html">Experimental setup</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

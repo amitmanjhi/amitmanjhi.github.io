@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>
+Simultaneous Scalability and Security for Data-Intensive Web Applications </title>
+</head>
+<body BGCOLOR=FFFFFF>
+<H2 ALIGN=CENTER>Simultaneous Scalability and Security for Data-Intensive Web Applications</H2>
+<h3 align=center>Amit Manjhi, Anastassia Ailamaki, Bruce M. Maggs, Todd C. Mowry, Christopher Olston, and Anthony Tomasic</H3>
+
+<h4>Abstract</h4>
+
+<p>For Web applications in which the database component is the
+bottleneck, scalability can be provided by a third-party <em> Database
+Scalability Service Provider (DSSP)</em> that caches application data
+and supplies query answers on behalf of the application.
+Cost-effective DSSPs will need to cache data from many applications,
+inevitably raising concerns about security. However, if all data
+passing through a DSSP is encrypted to enhance security, then data
+updates trigger invalidation of large regions of cache. Consequently,
+achieving good scalability becomes virtually impossible. There is a
+tradeoff between security and scalability, which requires careful
+consideration. </p>
+
+<p>
+In this paper we study the security-scalability tradeoff, both
+formally and empirically.  We begin by providing a method for
+statically identifying segments of the database that can be encrypted
+without impacting scalability. Experiments over a prototype DSSP
+system show the effectiveness of our static analysis method---for all
+three realistic benchmark applications that we study, our method
+enables a significant fraction of the database to be encrypted without
+impacting scalability.  Moreover, most of the data that can be
+encrypted without impacting scalability is of the type that
+application designers will want to encrypt, all other things being
+equal.  Based on our static analysis method, we propose a new
+scalability-conscious security design methodology that features: (a)
+compulsory encryption of highly sensitive data like credit card
+information, and (b) encryption of data for which encryption does not
+impair scalability. As a result, the security-scalability tradeoff
+needs to be considered only over data for which encryption impacts
+scalability, thus greatly simplifying the task of managing the
+tradeoff.</p> 
+
+<h3>Conference Paper (SIGMOD 2006): [<a
+ href="sss-sigmod06.pdf">PDF</a>]</h3>
+
+<h3>Extended Technical Report Version: [<a href="./sss-tr.pdf">PDF</a>]</h3>
+<h3>Talk slides: [<a href="./sss-sigmod06.ppt">PPT</a>] </h3>
+
+</body>
+
+</html>

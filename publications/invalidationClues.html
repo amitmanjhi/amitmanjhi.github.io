@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>
+Invalidation Clues for Database Scalability Services
+</title>
+</head>
+<body BGCOLOR=FFFFFF>
+<H2 ALIGN=CENTER>Invalidation Clues for Database Scalability Services</H2>
+<h3 align=center>Amit Manjhi, Phillip B. Gibbons, Anastassia Ailamaki, Charles
+    Garrod, Bruce M. Maggs, Todd C. Mowry, Christopher Olston, Anthony
+    Tomasic, and Haifeng Yu</H3>
+
+<h4>Abstract</h4>
+
+<p>
+For their scalability needs, data-intensive Web applications can use a
+Database Scalability Service (DBSS), which caches applications' query
+results and answers queries on their behalf. To address security/privacy 
+concerns while
+retaining the scalability benefits of a DBSS, applications would like
+to encrypt all their cached query results yet somehow enable the DBSS
+to invalidate these results when data updates render them
+obsolete. Without adequate information the DBSS is forced to
+invalidate large regions of its cache on an update.
+In this paper, we present {\em
+invalidation clues}, a general technique that enables applications to
+reveal little data to the DBSS, yet limit the number of unnecessary
+invalidations.  Compared with previous approaches, invalidation clues
+provide applications significantly improved tradeoffs between security/privacy and
+scalability.
+Our experiments
+using three Web application benchmarks, on a prototype DBSS we have
+built, confirm that invalidation clues are indeed a low-overhead,
+effective, and general technique for applications to balance
+their privacy and scalability needs.
+
+<h3>Conference Paper (ICDE 2007): [<a
+        href="ic-icde07.pdf">PDF</a>]</h3>
+
+<h3>Extended Technical Report Version (Computer Science Technical Report,
+    CMU-CS-06-139R, December 2006): [<a href="./ic-tr.pdf">PDF</a>])</h3>
+    (Supersedes previous technical report <a
+        href="./ic-tr-old.pdf">CMU-CS-06-139</a>, July 2006)</h3>
+<h3>Talk slides: [<a href="./ic-icde07.ppt">PPT</a>] </h3>
+
+</body>
+
+</html>

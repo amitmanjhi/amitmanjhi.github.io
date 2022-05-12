@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Different Schemes</TITLE>
+<META NAME="description" CONTENT="Different Schemes">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="finalReport.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html69"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html67"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html61"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html70"
+  HREF="node6.html">Benchmark descriptions</A>
+<B> Up:</B> <A NAME="tex2html68"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html62"
+  HREF="node4.html">Debugging innovations</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00030000000000000000">
+Different Schemes</A>
+</H1>
+The different schemes that we implemented fall under two categories. 
+First, there are policies that are simple and widely known like random, 
+LFU (Least Frequently Used), LRU (Least Recently Used) and FIFO 
+(First In First Out). We implemented these to have something 
+against which we can benchmark our implementations of the policies 
+in the second category. 
+In the second category are 
+not too widely used schemes,  
+that we thought could potentially achieve good results. 
+The various schemes in this category are:
+
+<UL>
+<LI><B>Hotornot</B>: This policy tries to take advantage of the case in which
+there is a single hot element, i.e. an element that is accessed quite often, 
+in an otherwise cold line. In such cases, it is profitable to 
+move this single element to a separate <EM>hot set</EM> and not waste valuable 
+cache space by storing the whole line. As an example, this case occurs 
+when a program repeatedly accesses a set of array elements in strides greater 
+than the cache block size. 
+
+<P>
+In our design, this <EM>hot set</EM> 
+is 0.8% (<!-- MATH
+ ${\frac{1}{128}}$
+ -->
+<IMG
+ WIDTH="27" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.png"
+ ALT="${\frac{1}{128}}$">) of the total cache size, 
+and thus incurs little space overhead. 
+We implement this scheme as a variant of LRU. 
+The way we keep track of the hot element is that corresponding to 
+every cache line, we record along with its <EM>last accessed</EM> 
+information, the actual element that was accessed from the line. We 
+perform a LRU replacement in the <EM>hot set</EM>. So, when 
+a new address is encountered, we first search for it in the <EM>hot set</EM>
+and if found, we update the <EM>last accessed</EM> information. If not, 
+we find the candidate which ought to be replaced from the <EM>hot set</EM>. 
+Then, we search for the line containing this element in the main cache. 
+If not found, we bring in this line by  
+evicting a line from the cache using LRU. While doing this, 
+we also compare the <EM>last accessed</EM> information of the hot 
+element of the line being evicted with the corresponding 
+information of the element that should be evicted from the <EM>hot set</EM>
+as per LRU. We might want to knock out an element out of the hot set to
+ accommodate this element.
+
+<P>
+We have presently made the <EM>hot set</EM> fully associative. With increasing cache 
+sizes, this will increase the cost of searching in the <EM>hot set</EM> 
+substantially, we need to either limit the associativity 
+of the <EM>hot set</EM>, or put a limit on its size. We have not yet 
+investigated this aspect of the scheme. 
+</LI>
+<LI><B>Firstnot</B>: This scheme tries to exploit the slight aberration 
+in the data access patterns of the programs. To take an example, a program 
+tries to access some specific address, that is not in its active set, and 
+which it does not plan to access in the future. This may occur as a result of 
+having to check for some error condition. 
+
+<P>
+We have based this scheme on LRU and LFU. Thus, corresponding to every cache line, 
+we store both its <EM>last accessed</EM> and <EM>count</EM> information. Whenever 
+we need to evict a line (this is decided based on LRU), we look at the 
+<EM>count</EM> information of the cache line. If the <EM>count</EM> is more 
+than 1, we do not make the replacement and set the count to 1, otherwise, we do 
+the replacement.   
+</LI>
+<LI><B>Victim</B>: In this scheme, we have a victim cache that is  
+0.2% (<!-- MATH
+ ${\frac{1}{512}}$
+ -->
+<IMG
+ WIDTH="27" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="${\frac{1}{512}}$">) of the total cache size, is fully associative, 
+and follows FIFO policy both in the replacements from the main 
+as well as the victim cache. 
+</LI>
+<LI><B>DiffBlock</B>: In this scheme, we explore whether partitioning the 
+cache based on whether it is a stack, heap or global data has any effect 
+on the cache miss rates. 
+</LI>
+<LI><B>LFU_over_LRU</B>: In this scheme, we have tried to incorporate 
+both the global history (as can be found in LFU), with the local 
+history (as found in LRU). For example, the simple LRU policy 
+simply evicts the line which was hot in the past, but has not 
+been accessed during the window of the LRU. We attempt to rectify 
+this in this scheme. 
+
+<P>
+In this scheme, every set is composed 
+of a queue of cache lines, and among queues, LFU is followed, 
+but inside a queue, LRU policy is followed. Cache lines are only evicted 
+from the least priority queue. By varying the number of 
+queues, the scheme allows us to explore the full 
+spectrum of schemes in between LRU and LFU. As we have 
+implemented it, the scheme has too much computational overhead, 
+but still, it is an attempt to  combine the advantages of 
+both LRU and LFU. This also aided us in the debugging process, 
+because by having varying number of queues, 
+we could mimic both LRU and LFU. 
+</LI>
+<LI><B>LRU_over_LFU</B>: This is just the reverse of the above scheme. 
+LRU is followed among queues, and LFU is followed inside a queue.
+</LI>
+<LI><B>LRU_dirty_secondchance</B>: This was our attempt to explore the 
+trade-off between the number of cache misses and the number of dirty blocks 
+evicted and forced to be written to memory. 
+Here, we give an extra chance to a dirty line by not evicting it 
+the first time it is encountered.  
+</LI>
+<LI><B>Prefetch</B>: In this version, we augmented LRU in a simple way. For 
+example, LRU performs miserably for any program that accesses in a loop a 
+ data set larger than what could possibly fit in the cache. In fact, for this case, 
+MRU (Most Recently Used) is optimal. We could avoid such misses, 
+if we could know that the line we are evicting now, contains the element that 
+would be accessed the soonest. 
+
+<P>
+To implement this, we keep
+track of the past accesses, use this knowledge to speculate what 
+is going to 
+be accessed next, and if the data is being evicted, prevent it from 
+being evicted. 
+A more general form of this would be to 
+pro-actively go and prefetch the data so that it is actually present 
+in the cache when needed, but, we cannot do this in our constrained framework. 
+
+<P>
+Currently, we detect only strides, based on the last 2 accesses the cache system has seen.
+</LI>
+<LI><B>Side</B>: This scheme tries to mimic LRU with a much less overhead. 
+In this scheme, a single counter tries to keep track of which elements in the set 
+have been accessed recently (<IMG
+ WIDTH="24" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$S_A$">), and which are fit for replacement (<IMG
+ WIDTH="24" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img6.png"
+ ALT="$S_R$">). 
+On every hit to a cache line, the line becomes part of <IMG
+ WIDTH="24" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$S_A$">. 
+Essentially, this means that 
+the counter moves to include the 
+element, only if the element did not originally belong to <IMG
+ WIDTH="24" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$S_A$">. In case a 
+cache line has to be replaced, the line pointed to by the counter is evicted and the 
+counter is subsequently increased by 1. The schemes thus loses all history 
+information whenever the last cache line of a set registers a hit.   
+</LI>
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html69"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html67"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html61"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html70"
+  HREF="node6.html">Benchmark descriptions</A>
+<B> Up:</B> <A NAME="tex2html68"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html62"
+  HREF="node4.html">Debugging innovations</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

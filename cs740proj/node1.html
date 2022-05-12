@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="next" HREF="node2.html">
+<LINK REL="previous" HREF="finalReport.html">
+<LINK REL="up" HREF="finalReport.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html29"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html27"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html21"
+  HREF="finalReport.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html30"
+  HREF="node2.html">Experimental setup</A>
+<B> Up:</B> <A NAME="tex2html28"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html22"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00010000000000000000">
+Introduction</A>
+</H1>
+The performance gap between the processor and memory has been increasing over 
+the years. In contrast to the memory access speeds, that are seeing an annual 
+improvement of only 25%, processor clock speeds are increasing 
+by about 60% every year. 
+The problem worsens with every new enhancement of the processor 
+architecture.
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="12"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Figure showing performance-memory gap.</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER"><IMG
+ WIDTH="344" HEIGHT="348" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="\includegraphics[width=3in]{index.ps}">
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+This has resulted in memory latency becoming the bottleneck for any 
+program that does a significant number of memory accesses. 
+An initial solution to the problem was to 
+ introduce a level of cache (smaller, faster but expensive memory)
+between the processor and memory that hides the memory latency by 
+exploiting the  
+spatial and temporal locality present in real-world programs[<A
+ HREF="node11.html#hp">1</A>]. 
+But, as the performance gap continued to widen, a single level 
+of cache proved to be insufficient, and  multiple 
+level of caches were needed to prevent memory latency from becoming a 
+serious bottleneck. In spite of this, memory latency 
+continues to be a problem 
+that would only aggravate with time. Also, the additions to 
+memory hierarchy are seeing diminishing returns to scale, i.e. soon 
+enough, benefits of adding a new level of cache would increase the 
+memory access time. This makes it imperative that 
+we use the available cache space in a more judicious fashion, 
+and look at other ways to decrease the memory access time. 
+
+<P>
+One way to do this is to increase the associativity of the 
+cache and have a more optimal  
+cache placement/replacement technique, 
+that minimizes the number of cache misses. 
+
+<P>
+There is an important 
+trade-off here. While increasing the complexity of the 
+cache placement/replacement decisions, we are slowing down all 
+memory references that need to pass through this cache. Our 
+benefit, which is the reduction in the number of cache misses 
+times the time saved in going to the memory as 
+compared to a cache hit, must be more than the cost incurred to make any 
+such  scheme feasible. But, we believe that as the 
+gap between the memory and the processor performance continues to increase, 
+many schemes which are infeasible now will become feasible in the future [<A
+ HREF="node11.html#softcache">2</A>]. 
+
+<P>
+We carried out a study to explore this way of reducing memory 
+latency and present the result in this paper. 
+We actually looked at only one aspect of the complete solution, i.e. the 
+varying number of cache misses that a L2 data cache suffers when following 
+different cache management strategies and when its size and associativity 
+are changed. In the process, we introduce some uncommon 
+cache placement/replacement policy that we believe are optimal for some commonly 
+occurring data access pattern. 
+We do not provide any quantitative measurements of whether such a 
+policy is feasible or not. But, still, we have tried to avoid 
+schemes that have an extremely high overhead in terms of space or time. 
+For all the less well-known schemes, we only provide an analytical 
+estimate for their space-time overheads. 
+Finally, once we had the setup ready, it only required a slight extension
+to enable us to 
+explore the trade-off between dirty stores and cache misses. We also 
+quantify this trade-off. 
+
+<P>
+In our study, we 
+focused on the L2 cache since it is the first level of cache that is not 
+constrained by the clock speed. Our other design goal was
+ to only use the 
+information derivable from the address stream that the cache has seen, 
+that is, we focus only on <B>history-based </B> caching policies. 
+Otherwise, profiling based techniques could be used to further 
+optimize the cache misses, by adopting a more cache-conscious data 
+placement[<A
+ HREF="node11.html#cachecons">3</A>][<A
+ HREF="node11.html#cachecons2">5</A>]. The reason 
+we chose to study the data cache instead of the instruction cache is because 
+the data access patterns of a program are a lot 
+less structured than the instruction access patterns, and thus, offer 
+correspondingly more avenues for improvement and impacting the program 
+performance. Here, we seek to minimize only the  
+<B>conflict misses</B> and <B>capacity misses</B> and not 
+worry about <B>cold misses</B>, for which techniques like 
+prefetching and increasing the cache line size already do a good 
+job[<A
+ HREF="node11.html#forward">4</A>]. 
+
+<P>
+The rest of the paper is organized as follows. Section 2 
+deals with our experimental setup. In section 3, we talk of 
+the different schemes we tested, and the next section 
+contains descriptions of the benchmarks we used. In section
+5, we present our results, and try to explain them based 
+on our understanding of the policies. 
+Finally, we provide the conclusions we drew from this study. 
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html29"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html27"
+  HREF="finalReport.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html21"
+  HREF="finalReport.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html30"
+  HREF="node2.html">Experimental setup</A>
+<B> Up:</B> <A NAME="tex2html28"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<B> Previous:</B> <A NAME="tex2html22"
+  HREF="finalReport.html">CS-740 Project Report Exploring</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

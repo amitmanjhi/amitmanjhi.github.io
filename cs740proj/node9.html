@@ -1,0 +1,401 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Experimental Results</TITLE>
+<META NAME="description" CONTENT="Experimental Results">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html109"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html107"
+  HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html103"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html110"
+  HREF="node10.html">Conclusions</A>
+<B> Up:</B> <A NAME="tex2html108"
+  HREF="node7.html">Results</A>
+<B> Previous:</B> <A NAME="tex2html104"
+  HREF="node8.html">A Surprising Result</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00052000000000000000">
+Experimental Results</A>
+</H2>
+In this section, we present the results of our study. 
+Firstly, we ran our cache management schemes on different 
+benchmark programs to find 
+out how well they performed in practice. 
+This is presented in figure <A HREF="node9.html#cm-bench"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="file:/usr/local/lib/latex2html/icons/crossref.png"></A>. The cache misses are 
+expressed in percentage terms. For this experiment,
+we emulated a cache of size 32 KB, that was 4-way set associative and 
+had a line size of 32 bytes, except for 'epic', for which 
+the cache size was 64 KB. We varied the cache size because we wanted different 
+benchmarks to have approximately the same number of cache misses. 
+We have split the results in two graphs and have used bezier curves 
+instead of straight lines in the graphs
+for the sake of clarity. The victim cache size for all the experiments 
+was <!-- MATH
+ ${\frac{1}{512}}$
+ -->
+<IMG
+ WIDTH="27" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="${\frac{1}{512}}$"> of 
+the main cache size, whereas the <EM>hot set</EM> in the <EM>hotornot</EM> 
+scheme was <!-- MATH
+ ${\frac{1}{128}}$
+ -->
+<IMG
+ WIDTH="27" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.png"
+ ALT="${\frac{1}{128}}$"> of the cache size. Also, the 
+number of queues maintained for the LRU_over_LFU and LFU_over_LRU schemes was 
+2 in each case.  
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="cm-bench"></A><A NAME="176"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Cache Misses for different policies.
+Key to benchmarks: 
+  1&nbsp;epic ,
+  2&nbsp;cellauto.c.1000-100 ,
+  3&nbsp;matmult.c.64 ,
+  4&nbsp;qsort.c.50000 ,
+  5&nbsp;queens.c.10 ,
+  6&nbsp;wordfreq.c.rev, 
+  7&nbsp;cellauto.java.1000-100 ,
+  8&nbsp;javacc.java.javaparser ,
+  9&nbsp;javac.java.spreadsheet ,
+  10&nbsp;kawa.java.pi100 ,
+ 11&nbsp;linpack.java ,
+  12&nbsp;matmult.java.64 ,
+  13&nbsp;qsort.java.50000 ,
+  14&nbsp;queens.java.10 ,
+  15&nbsp;wordfreq.java.rev 
+</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+As expected, the <EM>Random</EM> policy performs pretty badly, while the LRU and 
+LFU policies work well. The LRU policy usually is better than LFU.
+Interestingly, the SIDE algorithm does pretty well, with performance close to LFU, 
+though it maintains a lot less overhead. The hybrid schemes also do well,
+being usually between LRU and LFU in performance. This suggests an adaptive 
+mix of the two schemes will do well. Also, having a victim cache improves performance 
+tremendously, even though replacement policies used there is FIFO, which otherwise 
+doesn't perform as well. Thus we validate that having a victim cache can 
+improve performance. Among other schemes, the <EM>hotornot</EM> policy stands out.
+ Our simple <EM>prefetch</EM> scheme is not able to 
+detect many patterns and so, in most cases, 
+its performance closely follows the LRU performance. 
+Although we do not present the results for <EM>diffblock</EM>, since we could 
+not get all the benchmarks to run on Alpha due to lack of time, we noticed that 
+it does not perform as good as LRU. This suggests that a static division of 
+cache among the heap, stack and library address spaces will not work, 
+and we need to look at dynamic methods of dividing the available cache space or 
+have a profile-based division corresponding to each large program. 
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="cm-cs"></A><A NAME="177"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Cache Misses for different cache sizes.</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+</DIV>
+<P>
+<DIV ALIGN="CENTER">
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="cm-assoc"></A><A NAME="178"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Cache Misses for different associativity.</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV>
+<P>
+<DIV ALIGN="CENTER"></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+Next, we wanted to find out how our policies perform with changes in cache parameters.
+We decided to vary associativity and cache size independently for this purpose.
+All these experiments were performed on a single benchmark,  
+the Java compiler javac compiling a spreadsheet application.
+The result of varying the cache size from 8 KB to 128 KB are shown 
+in figure <A HREF="node9.html#cm-cs"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="file:/usr/local/lib/latex2html/icons/crossref.png"></A>. This represents the approximate sizes
+of cache's available today. In fact,today's caches go up to 512 KByte and larger, but we limited 
+ourselves to 128 KByte because we ran into memory problems with larger cache sizes.
+All the other parameters were the same as the previous experiment. 
+As expected, the cache miss rate drops with increasing cache size. 
+In this experiment, <EM>hotornot</EM> emerges a clear winner and the performance difference is 
+definitely perceptible for small cache sizes. As the cache size increases beyond the 
+active data set of the program, as expected, only cold misses occur,  and all policies 
+converge to a common value.
+This also causes the performance of the ``bad'' policies
+to fall more sharply than the others as the cache size is increased.  
+Finally, there is no data point for the victim cache scheme for 8 KB 
+size because the victim cache size is 16 bytes, which is not sufficient to 
+store even a single line. 
+
+<P>
+For figure <A HREF="node9.html#cm-assoc"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="file:/usr/local/lib/latex2html/icons/crossref.png"></A>, we took a 16 KByte cache with line size 32, and studied the effects
+of varying associativity from one (direct-mapped cache) to a 16 way set-associative, which we
+believe is the limit of feasibility. Larger values of associativity would increase hit times too
+much. In fact, few modern processors even have 8 way associative caches. As expected (except for 
+some pathological cases, one of which is detailed above), the cache miss rate drops with 
+increasing associativity. One exception was the <EM>side</EM> scheme, for which a 
+lower associativity works. This seems to suggest that for some data access patterns, 
+the simple partitioning scheme of <EM>side</EM> does 
+not work well when there are a large number of elements in the set. 
+Our cache size is only 16 KB for this experiment. The reason we took a smaller cache
+is because when we had initially tried the experiment for a larger cache, the
+fall in the cache miss rate with increasing associativity 
+was barely noticeable. Thus a large cache can get away with lower associativity, which is embodied 
+by the so-called <IMG
+ WIDTH="33" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.png"
+ ALT="$2:1$"> cache rule of thumb. A <IMG
+ WIDTH="19" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img14.png"
+ ALT="$N$"> sized cache with associativity 1 performs almost 
+equally as a <IMG
+ WIDTH="33" HEIGHT="31" ALIGN="MIDDLE" BORDER="0"
+ SRC="img15.png"
+ ALT="$N/2$"> sized cache with associativity 2. Thus low associativity is not a bad thing if our cache 
+is large, or to put it another way, if our programs are not absolutely huge.
+We also see that the LRU_ over_LFU policy performs relatively better as the associativity increases.
+This is due to the fact that in general, LRU performs better than LFU, and as associativity increases, the 
+scheme can take more advantage of the LRU scheme between the sub-queues.
+
+<P>
+Lastly, as we have stressed before, the increase in hit time that a policy causes should not be neglected. 
+ We had no way 
+of estimating this cost in our current setup. However, we thought we needed to address this issue, and as a first 
+cut, we studied how many dirty blocks were replaced by a particular scheme. If a modified or ``dirty'' block 
+is replaced by the strategy, the cache miss penalty is likely to be higher as the block has to be written 
+out to memory. 
+
+<P>
+To explore this trade-off, we implemented a simple <EM>second chance algorithm</EM> to control dirty replacements. 
+We took a 4-way set associative cache which had a size of 32 KByte, and measured how
+many dirty lines were evicted. The results are shown in Table <A HREF="node9.html#cm-ds"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="file:/usr/local/lib/latex2html/icons/crossref.png"></A>. The dirty miss rate 
+represents the percentage of evicted cache lines that were dirty. 
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="180"></A>
+<TABLE>
+<CAPTION><STRONG>Table:</STRONG>
+Cache Misses and Dirty Cache Replacements.</CAPTION>
+<TR><TD><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Benchmarks</TD>
+<TD ALIGN="CENTER" COLSPAN=2>LRU</TD>
+<TD ALIGN="CENTER" COLSPAN=2>LRU with <IMG
+ WIDTH="27" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="$2^{nd}$"> chance</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">Dirty Miss Rate</TD>
+<TD ALIGN="CENTER">Cache Miss Rate</TD>
+<TD ALIGN="CENTER">Dirty Miss Rate</TD>
+<TD ALIGN="CENTER">Cache Miss Rate</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cellauto.c</TD>
+<TD ALIGN="CENTER">0.000000</TD>
+<TD ALIGN="CENTER">0.007131</TD>
+<TD ALIGN="CENTER">0.000000</TD>
+<TD ALIGN="CENTER">0.007131</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cellauto.java</TD>
+<TD ALIGN="CENTER">65.038391</TD>
+<TD ALIGN="CENTER">1.230620</TD>
+<TD ALIGN="CENTER">65.021670</TD>
+<TD ALIGN="CENTER">1.230343</TD>
+</TR>
+<TR><TD ALIGN="LEFT">epic</TD>
+<TD ALIGN="CENTER">43.031039</TD>
+<TD ALIGN="CENTER">1.327477</TD>
+<TD ALIGN="CENTER">43.009294</TD>
+<TD ALIGN="CENTER">1.327847</TD>
+</TR>
+<TR><TD ALIGN="LEFT">go.alpha</TD>
+<TD ALIGN="CENTER">72.217353</TD>
+<TD ALIGN="CENTER">4.755708</TD>
+<TD ALIGN="CENTER">72.109307</TD>
+<TD ALIGN="CENTER">4.762191</TD>
+</TR>
+<TR><TD ALIGN="LEFT">javacc.java.javaparser</TD>
+<TD ALIGN="CENTER">77.174208</TD>
+<TD ALIGN="CENTER">0.191514</TD>
+<TD ALIGN="CENTER">76.342888</TD>
+<TD ALIGN="CENTER">0.191739</TD>
+</TR>
+<TR><TD ALIGN="LEFT">javac.java.spreadsheet</TD>
+<TD ALIGN="CENTER">24.949563</TD>
+<TD ALIGN="CENTER">1.210390</TD>
+<TD ALIGN="CENTER">24.865591</TD>
+<TD ALIGN="CENTER">1.211204</TD>
+</TR>
+<TR><TD ALIGN="LEFT">kawa.java.pi100</TD>
+<TD ALIGN="CENTER">55.758559</TD>
+<TD ALIGN="CENTER">0.643140</TD>
+<TD ALIGN="CENTER">55.702783</TD>
+<TD ALIGN="CENTER">0.643678</TD>
+</TR>
+<TR><TD ALIGN="LEFT">linpack.c</TD>
+<TD ALIGN="CENTER">86.575478</TD>
+<TD ALIGN="CENTER">4.712255</TD>
+<TD ALIGN="CENTER">86.562911</TD>
+<TD ALIGN="CENTER">4.712869</TD>
+</TR>
+<TR><TD ALIGN="LEFT">linpack.java</TD>
+<TD ALIGN="CENTER">86.308468</TD>
+<TD ALIGN="CENTER">1.179416</TD>
+<TD ALIGN="CENTER">86.201878</TD>
+<TD ALIGN="CENTER">1.180649</TD>
+</TR>
+<TR><TD ALIGN="LEFT">matmult.c</TD>
+<TD ALIGN="CENTER">9.936515</TD>
+<TD ALIGN="CENTER">1.062921</TD>
+<TD ALIGN="CENTER">9.932818</TD>
+<TD ALIGN="CENTER">1.063317</TD>
+</TR>
+<TR><TD ALIGN="LEFT">matmult.java</TD>
+<TD ALIGN="CENTER">16.543291</TD>
+<TD ALIGN="CENTER">0.675483</TD>
+<TD ALIGN="CENTER">16.527272</TD>
+<TD ALIGN="CENTER">0.676071</TD>
+</TR>
+<TR><TD ALIGN="LEFT">qsort.c</TD>
+<TD ALIGN="CENTER">71.599780</TD>
+<TD ALIGN="CENTER">1.600386</TD>
+<TD ALIGN="CENTER">71.585903</TD>
+<TD ALIGN="CENTER">1.600334</TD>
+</TR>
+<TR><TD ALIGN="LEFT">qsort.java</TD>
+<TD ALIGN="CENTER">71.653068</TD>
+<TD ALIGN="CENTER">0.217880</TD>
+<TD ALIGN="CENTER">71.600355</TD>
+<TD ALIGN="CENTER">0.218012</TD>
+</TR>
+<TR><TD ALIGN="LEFT">queens.c</TD>
+<TD ALIGN="CENTER">0.000000</TD>
+<TD ALIGN="CENTER">0.002678</TD>
+<TD ALIGN="CENTER">0.000000</TD>
+<TD ALIGN="CENTER">0.002678</TD>
+</TR>
+<TR><TD ALIGN="LEFT">queens.java</TD>
+<TD ALIGN="CENTER">69.076642</TD>
+<TD ALIGN="CENTER">0.321980</TD>
+<TD ALIGN="CENTER">69.076642</TD>
+<TD ALIGN="CENTER">0.321980</TD>
+</TR>
+<TR><TD ALIGN="LEFT">wordfreq.c.rev</TD>
+<TD ALIGN="CENTER">40.539468</TD>
+<TD ALIGN="CENTER">0.066736</TD>
+<TD ALIGN="CENTER">39.968342</TD>
+<TD ALIGN="CENTER">0.066894</TD>
+</TR>
+<TR><TD ALIGN="LEFT">wordfreq.java.rev</TD>
+<TD ALIGN="CENTER">44.442785</TD>
+<TD ALIGN="CENTER">0.564729</TD>
+<TD ALIGN="CENTER">44.137602</TD>
+<TD ALIGN="CENTER">0.565691</TD>
+</TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+What we would normally expect is that as we limit the dirty store (such as in our <EM>second chance 
+algorithm</EM>), the cache misses suffered by the program would rise. This is the case for most 
+programs. But, for some programs, for example, qsort.c and cellauto.java, both numbers fall, which is an 
+extremely good thing. This suggests that this trade-off must be further explored on other benchmarks. 
+Moreover, the gains from the <EM>second chance algorithm</EM> in both the favorable cases is barely perceptible. 
+This suggests that more aggressive algorithms that aggressively constrain the write back of 
+dirty lines should be considered. 
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html109"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html107"
+  HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html103"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html110"
+  HREF="node10.html">Conclusions</A>
+<B> Up:</B> <A NAME="tex2html108"
+  HREF="node7.html">Results</A>
+<B> Previous:</B> <A NAME="tex2html104"
+  HREF="node8.html">A Surprising Result</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

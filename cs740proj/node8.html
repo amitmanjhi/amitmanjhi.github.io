@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.57)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A Surprising Result</TITLE>
+<META NAME="description" CONTENT="A Surprising Result">
+<META NAME="keywords" CONTENT="finalReport">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="finalReport.css">
+
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html101"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html99"
+  HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html93"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html102"
+  HREF="node9.html">Experimental Results</A>
+<B> Up:</B> <A NAME="tex2html100"
+  HREF="node7.html">Results</A>
+<B> Previous:</B> <A NAME="tex2html94"
+  HREF="node7.html">Results</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00051000000000000000">
+A Surprising Result</A>
+</H2>
+Apart from helping us catch bugs that would otherwise be very 
+hard to figure out, some of our testing results surprised us. One 
+particularly non-intuitive one is the following. Previously, we used to think 
+that increasing associativity always decreases the number of cache misses.
+ But, it is not 
+true. Increasing associativity can actually <EM>increase</EM> the cache 
+misses, albeit for some pathological cases. When we first 
+encountered this result (quite rare depending on the sample size of 
+addresses and the cache size), we put it in the category of some 
+serious programming bug. After painstakingly 
+perusing the code, and validating it by manually doing a test run 
+on the input sample to ensure that it is not an 
+implementation bug, we found the answer to our surprises. Since then, 
+after analysing it more thoroughly, we came up with a small 
+example that epitomizes this characteristics. 
+Consider a cache of size = 2 elements, with only one element per block, and 
+consider both a direct-mapped and fully-associative (in this case, 
+2-way set associative) cache with cache replacement policy as LRU (though this 
+problem occurs with all common cache replacement schemes that we look at). 
+In the direct-mapped case, all the 
+even addresses would be mapped to frame 0, and all the odd addresses would 
+be mapped to frame 1. Next, let the address stream be
+<PRE>
+        1 0 2 1
+</PRE> 
+The direct mapped case suffers only 3 cold misses in this case but the 
+fully associative case suffers 4 misses. We presently don't know for sure 
+under which category of cache misses, 
+this phenomenon of <EM>constructive interference</EM> comes, 
+whereby the cache misses actually decrease by decreasing the 
+associativity. Most probably, it should be put under capacity 
+miss because the fully-associative cache had to replace the block 
+because of a lack of sufficient capacity. It is not that the difference 
+in the number of cache misses goes away, if the same set of accesses 
+are made repeatedly. 
+In fact, for every repeated access, in the direct mapped case, 
+only two of the four accesses 
+would result in a cache miss as opposed to three of the four accesses 
+resulting in a cache miss in the fully associative case. 
+
+<P>
+This demonstrates that it could well be that a program could 
+start suffering from more cache misses, once we increase the associativity.
+In such cases, increasing associativity is unanimously bad. 
+It not only increase the hit time
+(because of the increase in complexity of decision regarding which block to 
+evict), but also adversely affects the cache miss rate. 
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html101"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html99"
+  HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html93"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html102"
+  HREF="node9.html">Experimental Results</A>
+<B> Up:</B> <A NAME="tex2html100"
+  HREF="node7.html">Results</A>
+<B> Previous:</B> <A NAME="tex2html94"
+  HREF="node7.html">Results</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Amit K Manjhi
+2001-12-04
+</ADDRESS>
+</BODY>
+</HTML>

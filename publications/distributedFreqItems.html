@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Finding (Recently) Frequent Items in Distributed Data Streams</title>
+<body BGCOLOR=FFFFFF>
+<H2 ALIGN=CENTER>Finding (Recently) Frequent Items in Distributed Data Streams</H2>
+<h3 align=center>Amit Manjhi, Vladislav Shkapenyuk, Kedar Dhamdhere, and Christopher Olston</H3>
+
+<h4>Abstract</h4>
+
+<p>
+We consider the problem of maintaining frequency counts for items
+occurring frequently in the union of multiple distributed data
+streams. Naive methods of combining approximate frequency counts from
+multiple nodes tend to result in excessively large data structures
+that are costly to transfer among nodes. To minimize communication
+requirements, the degree of precision maintained by each node while
+counting item frequencies must be managed carefully. We introduce the
+concept of a <i>precision gradient</i> for managing precision when
+nodes are arranged in a hierarchical communication structure. We then
+study the optimization problem of how to set the precision gradient so
+as to minimize communication, and provide optimal solutions that
+minimize worst-case communication load over all possible inputs. We
+then introduce a variant designed to perform well in practice, with
+input data that does not conform to worst-case characteristics. We
+verify the effectiveness of our approach empirically using real-world
+data, and show that our methods incur substantially less communication
+than naive approaches while providing the same error guarantees on
+answers.  
+</p><p> 
+In addition, we extend techniques for maintaining
+frequency counts of high-frequency items in one or more streams by
+making them time-sensitive. Time-sensitivity is achieved by
+associating weights with items that decay exponentially with time. We
+analyze the error bounds and worst-case space bounds for the extended
+algorithms.
+</p>
+
+<h3>Conference Paper (ICDE 2005): [<a href="dfi-icde05.pdf">PDF</a>] [<a href="dfi-icde05.ps">PS</a>]</h3>
+<h3>Extended Version (October 2004): [<a href="dfi-tr.pdf">PDF</a>]</h3>
+<h3>Original CMU CS Technical Report CMU-CS-04-121, April 2004 [<a
+href="dfi-CMUtr-old.pdf">pdf</a>]</h3>
+
+<h3>Talk slides [<a href="dfi-icde05.ppt">PPT</a>]</h3>
+</body>
+
+</html>
